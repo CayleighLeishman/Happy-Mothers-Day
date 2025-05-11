@@ -208,3 +208,156 @@ body {
     transform: translate3d(0px, 0px, 0px);
   }
 }
+/* Mobile-specific styles using a media query */
+@media (max-width: 600px) {
+  body {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    perspective: none;
+    text-align: center;
+  }
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-left: -175px;
+  margin-top: -235px;
+  width: 350px;
+  height: 470px;
+  transform-style: preserve-3d;
+  transition: all ease-in-out 1s;
+  transform-origin: top center;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #dd9445; /* Match the cover color */
+  z-index: 2; /* Place it above the .inside initially */
+  transform-origin: bottom center;
+  transform: rotateX(0deg);
+  transition: transform ease-in-out 1.4s;
+}
+
+.card.open::before {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+
+.card .page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
+}
+
+.card .cover {
+  z-index: 3;
+  transform: rotateX(0deg);
+  transition: transform ease-in-out 1.4s;
+  background-color: #dd9445;
+}
+
+.card .inside {
+  z-index: 1;
+  transform-origin: bottom center;
+  /* Keep translateY for sliding effect if desired */
+  /* transform: translateY(100%); */
+  transition: transform ease-in-out 1.4s;
+}
+
+.card .inside .content {
+  opacity: 0; /* Initially hide the content */
+  transition: opacity 0.8s ease-in-out 0.4s; /* Fade in when open */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center content */
+  position: relative; /* Needed for z-index if other elements overlap */
+  z-index: 1; /* Ensure it's above the background of .inside */
+}
+
+.card.open .inside .content {
+  opacity: 1; /* Make content visible when open */
+}
+  .card .cover,
+  .card .inside {
+    position: relative;
+    transform: none !important;
+    backface-visibility: visible !important;
+  }
+
+  .card .cover::after,
+  .card .inside::after {
+    display: none;
+  }
+
+  .card .cover .content,
+  .card .inside .content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .card .cover h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+  }
+
+  .card .cover button {
+    font-size: 1.1em;
+    padding: 0.8em 1.5em;
+  }
+
+  .card .inside {
+    transform: translateY(100%); /* Initially hidden */
+    transition: transform ease-in-out 0.8s; /* Adjust timing if needed */
+  }
+
+  .card.open .inside {
+    transform: translateY(0%); /* Slide up */
+  }
+
+  .together-forever {
+    max-width: 90%;
+    margin: 10px 0;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.8s ease-in-out 0.4s; /* Delay fade-in slightly */
+    order: -1;
+  }
+
+  .card.open .together-forever {
+    opacity: 1; /* Show when open */
+    margin-top: 15px;
+  }
+
+  .t-text {
+    font-size: 1.3em;
+    margin-bottom: 8px;
+    order: 1;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hb {
+    font-size: 2.5em;
+    margin-top: 10px;
+    order: 2;
+  }
+
+  .b-text {
+    font-size: 1em;
+    margin-top: 8px;
+    order: 3;
+  }
+}
